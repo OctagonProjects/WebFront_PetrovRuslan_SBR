@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="stylespanel.css">
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div>
+            <div class="graph-block">
+                <div class="image-container">
+                    <div v-for="(image, index) in coworkingImages" :key="index" style="position: relative;">
+                        <img :src="image.src" alt="Коворкинг" class="slot-image">
+                        <div class="image-text">{{ image.text }}</div>
+                        <div class="overlay-buttons">
+                            <button class="overlay-button">Фото</button>
+                            <button class="overlay-button">Информация</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slots-container">
+                    <div class="time-slots">
+                        <div class="slot-time" v-for="(slot, index) in timeSlots" :key="index">
+                            <span :class="{'booked': slot.booked}">{{ slot.time }}</span>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button @click="book" class="button">Забронировать</button>
+                        <button @click="book" class="button" style="color: black; background-color: white">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+            <div class="graph-block">
+                <div class="image-container">
+                    <div v-for="(image, index) in meetingRoomImages" :key="index" style="position: relative;">
+                        <img :src="image.src" alt="Переговорная" class="slot-image">
+                        <div class="image-text">{{ image.text }}</div>
+                        <div class="overlay-buttons">
+                            <button class="overlay-button">Фото</button>
+                            <button class="overlay-button">Информация</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slots-container">
+                    <div class="time-slots">
+                        <div class="slot-time" v-for="(slot, index) in timeSlots" :key="index + 100">
+                            <span :class="{'booked': slot.booked}">{{ slot.time }}</span>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button @click="book" class="button">Забронировать</button>
+                        <button @click="book" class="button" style="color: black; background-color: white;">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <template>
+            <div class="relative w-[459.75px] h-[364px] mt-[50px] ml-[auto] rounded-[9px]" style="background-color: rgba(214, 214, 214, 0.89);">
+                <div class="absolute flex items-center justify-between w-[200px] h-[23.8px] mt-[27.77px] ml-[39.77px]">
+                    <p class="text-black text-[20px] letter-[0.38px] font-bold leading-[24px] font-nunito-sans">Декабрь
+                        2023</p>
+                    <div class="size-[18px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
+                        </svg></div>
+                </div>
+
+                <div class="absolute flex ml-[355px] mt-[32.3px] gap-[10px]">
+                    <div class="size-[18px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                        </svg></div>
+                    <div class="size-[18px] "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
+                        </svg></div>
+                </div>
+
+                <div class="absolute grid grid-cols-7 ml-[54.6px] mt-[74.39px] w-[380px] h-[267px]">
+                    <div class="absolute grid grid-cols-7 gap-[35.6px] ">
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Пн</p>
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Вт</p>
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Ср</p>
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Чт</p>
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Пт</p>
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Сб</p>
+                        <p
+                            class="w-[18.72px] h-[15.87px] text-[#43716b] text-[12px] leading-[16px] font-semibold font-nunito-sans">
+                            Вс</p>
+                    </div>
+                    <div class="absolute grid grid-cols-7 mt-[43px]">
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">27
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">28
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">29
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">30
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">1</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">2
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">3
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">4</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">5</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">6</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">7</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">8</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">9
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">10
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">11</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">12</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">13</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">14</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">15</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">16
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">17
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">18</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">19</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">20</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">21</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">22</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">23
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">24
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">25</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">26</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">27</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">28</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px]">29</p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">30
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF0000]">31
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">1
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">2
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">3
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">4
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#686868]">5
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF9292]">6
+                        </p>
+                        <p class="w-[54.31px] h-[37.97px] text-[16px] font-nunito-sans leading-[21px] text-[#FF9292]">7
+                        </p>
+                    </div>
+                </div>
+                <h2 class="prigl">Автивные приглашения</h2> 
+                <div class="graph-block2">
+                    <b><p class="filming">Съемки в первомайском</p></b>
+                    <span class="span">10.00 - 12.00</span>
+                    <span class="span">Иванов И. В.</span>
+                    <span class="span">Фотограф</span>
+                    <div class="button-container2">
+                        <button @click="book" class="button2">Подробнее</button>
+                        <button @click="book" class="button2" style="color: black; background-color: white;">Отклонить</button>
+                    </div>
+                </div>
+                <div class="graph-block2">
+                    <b>
+                        <p class="filming">Съемки в первомайском</p>
+                    </b>
+                    <span class="span">10.00 - 12.00</span>
+                    <span class="span">Иванов И. В.</span>
+                    <span class="span">Фотограф</span>
+                    <div class="button-container2">
+                        <button @click="book" class="button2">Подробнее</button>
+                        <button @click="book" class="button2" style="color: black; background-color: white;">Отклонить</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Модальное окно -->
+        <div v-if="showErrorModal" class="modal">
+            <div class="modal-content">
+                <h1 class="text-xl font-bold">Ошибка</h1>
+                <p class="mt-2">{{ errorMessage }}</p>
+                <button @click="closeErrorModal"
+                    class="prin-buttom mt-4 text-white rounded-md px-4 py-2 w-full">Принять</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                coworkingImages: [
+                    { src: 'https://avatars.mds.yandex.net/i?id=3af77985add3e53380bd5a75b0dd922998396adf-9083254-images-thumbs&n=13', text: 'Коворкинг ИРНИТУ' }
+                ],
+                meetingRoomImages: [
+                    { src: 'https://avatars.mds.yandex.net/i?id=11b214fc07cf2b33103cebdc213a707a_l-5904855-images-thumbs&n=13', text: 'Переговорная ИРНИТУ' }
+                ],
+                timeSlots: [],
+                selectedSlot: null,
+                showErrorModal: false,
+                errorMessage: ''
+            },
+            created() {
+                this.generateTimeSlots();
+            },
+            methods: {
+                generateTimeSlots() {
+                    const slots = [];
+                    for (let hour = 8; hour < 20; hour++) {
+                        slots.push({
+                            time: `${hour}:00 - ${hour + 1}:00`,
+                            booked: false
+                        });
+                    }
+                    this.timeSlots = slots;
+                },
+                book() {
+                    if (!this.selectedEvent || !this.selectedTime) {
+                        this.errorMessage = 'Неверный запрос. Обратитесь в техподдержку';
+                        this.showErrorModal = true;
+                        return;
+                    }
+                     alert(`Бронирование подтверждено!\nМероприятие: ${this.selectedEvent}\nВремя: ${this.selectedTime}\nОтветственные: ${this.responsibles.join(', ')}\nКомментарии: ${this.comments}`);
+                },
+                closeErrorModal() {
+                    this.showErrorModal = false;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
